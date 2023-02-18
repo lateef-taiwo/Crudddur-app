@@ -41,12 +41,14 @@ I used the credentials to set up environment variables for the current bash term
     export AWS_SECRET_ACCESS_KEY=""
     export AWS_DEFAULT_REGION=us-east-1
 
-Allowed Gitpod to use credentials next time I open my workspace
+### Allowed Gitpod to use credentials next time I open my workspace
 
     gp env AWS_ACCESS_KEY_ID=""
     gp env AWS_SECRET_ACCESS_KEY=""
     gp env AWS_DEFAULT_REGION=us-east-1
 
-I verified that AWS CLI is working using the command below
+### I verified that AWS CLI is working using the command below
 
   `aws sts get-caller-identity`
+
+### Created SNS Topic
