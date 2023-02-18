@@ -7,7 +7,7 @@
 ![update](./images/awscli%20install.png)
 
 * Setup AWS CLI to use partial auto prompt mode
-* The bash commands we are using are the same as the instructions in this link[AWS CLI Install Instructions](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+* The bash commands we are using are the same as the instructions in this link [AWS CLI Install Instructions](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 
 ### Updated .gitpod.yml to include the following task.
 
@@ -19,7 +19,34 @@
 * Enable console access for the user
 * Create a new Admin Group and apply AdministratorAccess
 * Create the user and go find and click into the user
-* Click on Security Credentials and Create Access Key, Choose AWS CLI Access
-* Download the CSV with the credentials
+* Created security credential for the user and downloaded the .csv file containing the credentials
 
-![iam](./images/admin%20user.png)
+  ![admin](./images/admin%20user.png)
+
+  ![admin](./images/Administrator.png)
+ 
+  ![iam](./images/admin%20user.png)
+  ![admin](./images/admin%20user2.png)
+
+* Setup Multi Factor Authentication (MFA) for the Admin-user (IAM user) because this is best practice for improved security.
+
+* I Signed out of root user and signed in as the new IAM user
+
+-----------
+
+### Setting Up Environment Variable
+I used the credentials to set up environment variables for the current bash terminal and persisted it afterwards.
+
+    export AWS_ACCESS_KEY_ID=""
+    export AWS_SECRET_ACCESS_KEY=""
+    export AWS_DEFAULT_REGION=us-east-1
+
+Allowed Gitpod to use credentials next time I open my workspace
+
+    gp env AWS_ACCESS_KEY_ID=""
+    gp env AWS_SECRET_ACCESS_KEY=""
+    gp env AWS_DEFAULT_REGION=us-east-1
+
+I verified that AWS CLI is working using the command below
+
+  `aws sts get-caller-identity`
