@@ -21,3 +21,5 @@
 * Create the user and go find and click into the user
 * Click on Security Credentials and Create Access Key, Choose AWS CLI Access
 * Download the CSV with the credentials
+
+![iam](./images/admin%20user.png)
