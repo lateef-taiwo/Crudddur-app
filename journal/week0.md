@@ -14,10 +14,10 @@
 ![gitpod](./images/gitpod%20update.png)
 
 ### Create a new User and Generate AWS Credentials
-* Go to [IAM Users Console](https://us-east-1.console.aws.amazon.com/iamv2/home?region=us-east-1#/users) andrew create a new user
-    Enable console access for the user
-    Create a new Admin Group and apply AdministratorAccess
-    Create the user and go find and click into the user
-    Click on Security Credentials and Create Access Key
-    Choose AWS CLI Access
-    Download the CSV with the credentials
+* Go to [IAM Users Console](https://us-east-1.console.aws.amazon.com/iamv2/home?region=us-east-1#/users) 
+* create a new user
+* Enable console access for the user
+* Create a new Admin Group and apply AdministratorAccess
+* Create the user and go find and click into the user
+* Click on Security Credentials and Create Access Key, Choose AWS CLI Access
+* Download the CSV with the credentials
