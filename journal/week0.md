@@ -12,3 +12,5 @@
 ### Updated .gitpod.yml to include the following task.
 
 ![gitpod](./images/gitpod%20update.png)
+
+### Create a new User and Generate AWS Credentials
