@@ -2,7 +2,7 @@
 ## Required Homework/Taksk
 -------
 ### Install and Verify AWS CLI
-*  Installed AWS CLI via Gitpod. I have it installed already. I checked to see if there is an update. It appeared that the latest version of AWS CLI is running on my system.
+*  Installed AWS CLI via Gitpod and verified the installation using the `aws --version` command 
 
 ![update](./images/awscli%20install.png)
 
