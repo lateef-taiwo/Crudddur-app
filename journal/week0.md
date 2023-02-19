@@ -77,7 +77,7 @@ This returned a Topic ARN. I created a sunscription by supplying the topic arn a
 
 * I checked my mail box and confirmed the subscription.
 
-### Created Alarm 
+### Created Billing Alarm 
 * aws cloudwatch put-metric-alarm
 * Create an Alarm via AWS CLI
 * Update the configuration json script with the TopicARN we generated earlier
