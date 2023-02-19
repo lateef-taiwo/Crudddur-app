@@ -62,6 +62,10 @@ I used the credentials to set up environment variables for the current bash term
 
   `aws sts get-caller-identity`
 
+OR
+
+  `aws sts get-caller-identity --query Account --output text`
+
 ### Created SNS Topic
 `aws sns create-topic --name billing-alarm`
 This returned a Topic ARN. I created a sunscription by supplying the topic arn and my email address.
@@ -82,3 +86,11 @@ This returned a Topic ARN. I created a sunscription by supplying the topic arn a
 `aws cloudwatch put-metric-alarm --cli-input-json file://aws/json/alarm_config.json`
 
 ### Created an AWS Budget
+
+![budget](./images/budget.png)
+
+### Cruddur App Conceptual Diagram
+![Diagram](./images/conceptual%20diagram.png)
+
+## Cruddur App Logical Diagram
+![Diagram](./images/cruddur%20app%20Architectural%20diagram.png)
