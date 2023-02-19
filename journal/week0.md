@@ -92,7 +92,7 @@ This returned a Topic ARN. I created a sunscription by supplying the topic arn a
 ### Cruddur App Conceptual Diagram
 ![Diagram](./images/conceptual%20diagram.png)
 
-## Cruddur App Logical Diagram
+## Cruddur App Logical Architectural Diagram
 ![Diagram](./images/cruddur%20app%20Architectural%20diagram.png)
 
-[Link to Logical Diagram of the Cruddur App](https://lucid.app/lucidchart/invitations/accept/inv_bc328d01-4653-457a-a17c-9cfa01b4e0a7)
+[Link to Logical Architectural Diagram of the Cruddur App](https://lucid.app/lucidchart/invitations/accept/inv_bc328d01-4653-457a-a17c-9cfa01b4e0a7)
