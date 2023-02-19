@@ -9,7 +9,18 @@
 * Setup AWS CLI to use partial auto prompt mode
 * The bash commands we are using are the same as the instructions in this link [AWS CLI Install Instructions](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 
-### Updated .gitpod.yml to include the following task.
+### Updated .gitpod.yml to include the following text.
+
+        tasks:
+    - name: aws-cli
+        env:
+        AWS_CLI_AUTO_PROMPT: on-partial
+        init: |
+        cd /workspace
+        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+        unzip awscliv2.zip
+        sudo ./aws/install
+        cd $THEIA_WORKSPACE_ROOT
 
 ![gitpod](./images/gitpod%20update.png)
 
@@ -52,3 +63,22 @@ I used the credentials to set up environment variables for the current bash term
   `aws sts get-caller-identity`
 
 ### Created SNS Topic
+`aws sns create-topic --name billing-alarm`
+This returned a Topic ARN. I created a sunscription by supplying the topic arn and my email address.
+
+    aws sns subscribe \               
+        --topic-arn=" " \
+        --protocol=email \  
+        --notification-endpoint=" "
+
+* I checked my mail box and confirmed the subscription.
+
+### Created Alarm 
+* aws cloudwatch put-metric-alarm
+* Create an Alarm via AWS CLI
+* Update the configuration json script with the TopicARN we generated earlier
+* We use just a json file because --metrics is is required for expressions and so its easier to us a JSON file.
+
+`aws cloudwatch put-metric-alarm --cli-input-json file://aws/json/alarm_config.json`
+
+### Created an AWS Budget
