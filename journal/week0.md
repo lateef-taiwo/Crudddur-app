@@ -90,9 +90,9 @@ This returned a Topic ARN. I created a sunscription by supplying the topic arn a
 ![budget](./images/budget.png)
 
 ### Cruddur App Conceptual Diagram
-![Diagram](./images/conceptual%20diagram.png)
+![Diagram](../_docs/assets/My%20Cruddur%20%20conceptual%20diagram.png)
 
 ## Cruddur App Logical Architectural Diagram
-![Diagram](./images/cruddur%20app%20Architectural%20diagram.png)
+![Diagram](../_docs/assets/My%20cruddur%20app%20Architectural%20diagram.png)
 
 [Link to Logical Architectural Diagram of the Cruddur App](https://lucid.app/lucidchart/invitations/accept/inv_bc328d01-4653-457a-a17c-9cfa01b4e0a7)
