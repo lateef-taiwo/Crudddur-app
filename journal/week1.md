@@ -92,7 +92,64 @@ Prior to Containerizing the backend, I ran the application to cofirm it works.
    ![docker](./assets/Week-1/docker-ps.png)
    ![docker](./assets/Week-1/docker-images.png)
 
+### Send Curl to Test Server
+    curl -X GET http://localhost:4567/api/activities/home -H "Accept: application/json" -H "Content-Type: application/json"
+     
+  ![curl](./assets/Week-1/curl-backend-container.png)
+
+### Check Container Logs
+    docker logs CONTAINER_ID -f
+    docker logs backend-flask -f
+    docker logs $CONTAINER_ID -f
+
+### Debugging adjacent containers with other containers
+
+    docker run --rm -it curlimages/curl "-X GET http://localhost:4567/api/activities/home -H \"Accept: application/json\" -H \"Content-Type: application/json\""
+
+### busybosy is often used for debugging since it install a bunch of thing
+     docker run --rm -it busybosy
+
+### Gain Access to a Container
+
+`docker exec CONTAINER_ID -it /bin/bash`
+> This can also be written as:
+
+`docker exec CONTAINER_ID -it bash`
+
+> You can just right click a container and see logs in VSCode with Docker extension
 
 
+![docker](./assets/Week-1/backend-container-attach-shell.png)
 
+### Delete or Remove a Container Image
+    docker image rm backend-flask --force
+The `--force` flag removes a container image that is currently running. 
+    `docker rmi backend-flask` is the legacy syntax to remove an image
 
+### Overriding Ports
+
+      FLASK_ENV=production PORT=8080 docker run -p 4567:4567 -it backend-flask
+
+## Containerize Frontend
+### Run NPM Install
+We have to run `npm Install` before building the container since it needs to install some dependencies the contents of node_modules
+
+     cd frontend-react-js
+     npm i
+
+### Create Docker File
+I Created a Docerfile in the frontend-react-js directory using vim editor.
+
+  `vim Dockerfile`
+
+    FROM node:16.18
+
+    ENV PORT=3000
+
+    COPY . /frontend-react-js
+    WORKDIR /frontend-react-js
+    RUN npm install
+    EXPOSE ${PORT}
+    CMD ["npm", "start"]
+
+![frontend](./assets/Week-1/frontend-Docker-file.png)
