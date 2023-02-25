@@ -4,7 +4,7 @@
 ### Install and Verify AWS CLI
 *  Installed AWS CLI via Gitpod and verified the installation using the `aws --version` command 
 
-![update](./images/awscli%20install.png)
+![update](../journal/assets/Week-0/awscli-install.png)
 
 * Setup AWS CLI to use partial auto prompt mode
 * The bash commands we are using are the same as the instructions in this link [AWS CLI Install Instructions](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
@@ -22,7 +22,7 @@
         sudo ./aws/install
         cd $THEIA_WORKSPACE_ROOT
 
-![gitpod](./images/gitpod%20update.png)
+![gitpod](./assets/Week-0/gitpod-update.png)
 
 ### Create a new User and Generate AWS Credentials
 * Go to [IAM Users Console](https://us-east-1.console.aws.amazon.com/iamv2/home?region=us-east-1#/users) 
@@ -32,12 +32,12 @@
 * Create the user and go find and click into the user
 * Created security credential for the user and downloaded the .csv file containing the credentials
 
-  ![admin](./images/admin%20user.png)
+  ![admin](./assets/Week-0/admin-user.png)
 
-  ![admin](./images/Administrator.png)
+  ![admin](./assets/Week-0/Administrator.png)
  
-  ![iam](./images/admin%20user.png)
-  ![admin](./images/admin%20user2.png)
+  ![iam](./assets/Week-0/admin-user.png)
+  ![admin](./assets/Week-0/admin-user2.png)
 
 * Setup Multi Factor Authentication (MFA) for the Admin-user (IAM user) because this is best practice for improved security.
 
@@ -87,7 +87,7 @@ This returned a Topic ARN. I created a sunscription by supplying the topic arn a
 
 ### Created an AWS Budget
 
-![budget](./images/budget.png)
+![budget](./assets/Week-0/budget.png)
 
 ### Cruddur App Conceptual Diagram
 ![Diagram](../_docs/assets/My%20Cruddur%20%20conceptual%20diagram.png)
@@ -96,3 +96,20 @@ This returned a Topic ARN. I created a sunscription by supplying the topic arn a
 ![Diagram](../_docs/assets/My%20cruddur%20app%20Architectural%20diagram.png)
 
 [Link to Logical Architectural Diagram of the Cruddur App](https://lucid.app/lucidchart/invitations/accept/inv_bc328d01-4653-457a-a17c-9cfa01b4e0a7)
+
+### AWS Well-Architected framework and the Six Pillars
+The AWS Well-Architected Framework describes key concepts, design principles, and architectural best practices for designing and running workloads in the cloud. By answering a few foundational questions, learn how well your architecture aligns with cloud best practices and gain guidance for making improvements.
+
+### The Six Pillars
+1. Operational Excellence: The operational excellence pillar focuses on running and monitoring systems, and continually improving processes and procedures. Key points include automating changes, responding to events, and defining standards to manage daily operations.
+
+2. Security: This focuses on protecting information and systems. Key topics include confidentiality and integrity of data, managing user permissions, and establishing controls to detect security events.
+
+3. Reliability: This pillar focuses on workloads performing their intended functions and how to recover quickly from failure to meet demands. Key topics include distributed system design, recovery planning, and adapting to changing requirements.
+
+4. Performance Efficiency: This pillar: focuses on structured and streamlined allocation of IT and computing resources. Key topics include selecting resource types and sizes optimized for workload requirements, monitoring performance, and maintaining efficiency as business needs evolve.
+
+5. Cost Optimization: The cost optimization pillar focuses on avoiding unnecessary costs. Key topics include understanding spending over time and controlling fund allocation, selecting resources of the right type and quantity, and scaling to meet business needs without overspending.
+
+6. Sustainability: The sustainability pillar focuses on minimizing the environmental impacts of running cloud workloads. Key topics include a shared responsibility model for sustainability, understanding impact, and maximizing utilization to minimize required resources and reduce downstream impacts. 
+
