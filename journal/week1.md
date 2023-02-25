@@ -8,7 +8,7 @@ https://code.visualstudio.com/docs/containers/overview
 
 ## Containerize Backend
 Prior to Containerizing the backend, I ran the application to cofirm it works.
-### Run Python flask backend app
+### Run backend-flask locally
     cd backend-flask
     export FRONTEND_URL="*"
     export BACKEND_URL="*"
