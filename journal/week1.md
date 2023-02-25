@@ -26,7 +26,7 @@ Prior to Containerizing the backend, I ran the application to cofirm it works.
 * Ensure you are in the backend directory
 
   `cd backend`
-  
+
   `vim Dockerfile`
 
 ![DOckerfile](./assets/Week-1/Dockerfile%20backend.png)
@@ -49,4 +49,9 @@ Prior to Containerizing the backend, I ran the application to cofirm it works.
 
    ![Dockerfile](./assets/Week-1/Dockerfile-backend2.png)
 
+## Build docker image for backend
+
+  `docker build -t  backend-flask ./backend-flask`
+### Run Container using the image built
+ 
 
