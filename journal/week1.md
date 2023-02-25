@@ -153,3 +153,49 @@ I Created a Docerfile in the frontend-react-js directory using vim editor.
     CMD ["npm", "start"]
 
 ![frontend](./assets/Week-1/frontend-Docker-file.png)
+
+##  Build frontend Container image
+
+    docker build -t frontend-react-js ./frontend-react-js
+
+## Run Container in detached mode
+    docker run -p 3000:3000 -d frontend-react-js
+
+## Multiple Containers
+### Create a docker-compose file
+I Created `docker-compose.yml file` at the root of the project and I pasted the code below in it.
+
+    version: "3.8"
+    services:
+        backend-flask:
+            environment:
+            FRONTEND_URL: "https://3000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
+            BACKEND_URL: "https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
+            build: ./backend-flask
+            ports:
+            - "4567:4567"
+            volumes:
+            - ./backend-flask:/backend-flask
+        frontend-react-js:
+            environment:
+            REACT_APP_BACKEND_URL: "https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
+            build: ./frontend-react-js
+            ports:
+            - "3000:3000"
+            volumes:
+            - ./frontend-react-js:/frontend-react-js
+
+        # the name flag is a hack to change the default prepend folder
+        # name when outputting the image names
+    networks: 
+        internal-network:
+            driver: bridge
+            name: cruddur
+
+  ![docker-compose file](./assets/Week-1/docker-compose-file-pics.png)
+
+  ### Run frontend and backend containers and make them communicate.
+
+    docker compose -f "docker-compose.yml" up -d --build
+
+![docker compose](./assets/Week-1/docker-compose-build-complete.png)
