@@ -248,3 +248,11 @@ Lets integrate the following into our existing docker compose file:
 Directory volume mapping
     volumes: 
     - "./docker/dynamodb:/home/dynamodblocal/data"
+
+### named volume mapping
+    volumes: 
+        - db:/var/lib/postgresql/data
+
+    volumes:
+        db:
+            driver: local
