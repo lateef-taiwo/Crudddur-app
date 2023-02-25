@@ -206,6 +206,8 @@ I encountered the CORS (Cross Origin Resource Sharing) error encountered during 
 
 ![errors](./assets/Week-1/errors.png)
 
+### When I use Chrome
+
 ![built](./assets/Week-1/app-containerized-working.png)
 
 ## Adding DynamoDB Local and Postgres
