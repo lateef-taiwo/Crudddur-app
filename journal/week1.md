@@ -71,8 +71,28 @@ Prior to Containerizing the backend, I ran the application to cofirm it works.
     unset FRONTEND_URL="*"
     unset BACKEND_URL="*"
 
- 
+![docker run](./assets/Week-1/docker-run.png)
+
+### Run in background
+
+ `docker container run --rm -p 4567:4567 -d backend-flask`
+
+  ![docker](./assets/Week-1/backend-container-run-4569.png)
+
+### Return the container id into an Environment variables
+
+ `CONTAINER_ID=$(docker run --rm -p 4567:4567 -d backend-flask)`
+
+### Get Container Images or Running Container Ids
+
+    docker ps
+    docker images
+  `docker ps` displays containers that are currently running (not exited or stopped), `docker images` displays container images
+
+   ![docker](./assets/Week-1/docker-ps.png)
+   ![docker](./assets/Week-1/docker-images.png)
 
 
- 
+
+
 
