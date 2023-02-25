@@ -199,3 +199,24 @@ I Created `docker-compose.yml file` at the root of the project and I pasted the 
     docker compose -f "docker-compose.yml" up -d --build
 
 ![docker compose](./assets/Week-1/docker-compose-build-complete.png)
+
+## Adding DynamoDB Local and Postgres
+We are going to use Postgres and DynamoDB local in future labs. We can bring them in as containers and reference them externally
+
+Lets integrate the following into our existing docker compose file:
+
+### Postgres
+    services:
+    db:
+        image: postgres:13-alpine
+        restart: always
+        environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=password
+        ports:
+        - '5432:5432'
+        volumes: 
+        - db:/var/lib/postgresql/data
+    volumes:
+    db:
+        driver: local
