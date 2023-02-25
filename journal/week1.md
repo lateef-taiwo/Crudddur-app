@@ -200,6 +200,14 @@ I Created `docker-compose.yml file` at the root of the project and I pasted the 
 
 ![docker compose](./assets/Week-1/docker-compose-build-complete.png)
 
+### Open the app
+Make sure the padlock on ports 3000 and 4567 are open in the ports session, then open the link with port 300 in the browser.
+I encountered the CORS (Cross Origin Resource Sharing) error encountered in the livestream. I checked that the ports are correct in the docker-compose file, and ran the `docker compose -f "docker-compose.yml" up -d --build`. After several hours of building the image and checking online to see if I can get a fix, I discovered that there is an issue with the browser I was using (firefox) its blocks CORS, although I tried to enable it following several suggested fixes on [stackoverflow.com](https://stackoverflow.com/questions/26980713/solve-cross-origin-resource-sharing-with-flask) but the error persisted. Then I opted to use Chrome browser and it worked.
+
+![errors](./assets/Week-1/errors.png)
+
+![built](./assets/Week-1/app-containerized-working.png)
+
 ## Adding DynamoDB Local and Postgres
 We are going to use Postgres and DynamoDB local in future labs. We can bring them in as containers and reference them externally
 
