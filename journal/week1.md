@@ -49,9 +49,30 @@ Prior to Containerizing the backend, I ran the application to cofirm it works.
 
    ![Dockerfile](./assets/Week-1/Dockerfile-backend2.png)
 
+* I type the `docker images` command to see the docker images. This displays the newly built backend-flask image and the base image (python3:3.10-slim-buster). The backend-flask image gets a tag of latest (because we didn't specify a tag)
+
+   ![docker](./assets/Week-1/docker-images.png)
+
 ## Build docker image for backend
 
   `docker build -t  backend-flask ./backend-flask`
+
+  ![docker build](./assets/Week-1/docker-build1.png)
+
+  ![docker build](./assets/Week-1/docker-build-1-successful.png)
 ### Run Container using the image built
+
+    docker run --rm -p 4567:4567 -it backend-flask
+    FRONTEND_URL="*" BACKEND_URL="*" docker run --rm -p 4567:4567 -it backend-flask
+    export FRONTEND_URL="*"
+    export BACKEND_URL="*"
+    docker run --rm -p 4567:4567 -it -e FRONTEND_URL='*' -e BACKEND_URL='*' backend-flask
+    docker run --rm -p 4567:4567 -it  -e FRONTEND_URL -e BACKEND_URL backend-flask
+    unset FRONTEND_URL="*"
+    unset BACKEND_URL="*"
+
+ 
+
+
  
 
