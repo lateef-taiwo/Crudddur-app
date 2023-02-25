@@ -16,7 +16,7 @@ Prior to Containerizing the backend, I ran the application to cofirm it works.
     cd ..
 
 * I unlocked the port on the port tab and open the link for 4567 in my browser
-* I appended to the url to /api/activities/home and I get json data
+* At first, I got HTTP error 404, then I appended to the url /api/activities/home and I get json data
   
  ![data](./assets/Week-1/http-200-ok.png)
  ![json](./assets/Week-1/Json.png)
