@@ -325,7 +325,7 @@ General guidelines and recommendations
   The docker build or docker buildx build commands build Docker images from a Dockerfile and a “context”.
 
   A build’s context is the set of files located at the PATH or URL specified as the positional argument to the build command:
-   docker build [OPTIONS] PATH as used when building the images. docker build -t backend ./backend-flask/ 
+    `docker build [OPTIONS] PATH` as used when building the images. docker build -t backend ./backend-flask/ 
    `./backend-flask` is he PATH specified as the positional argument to the build command.
 
 2. Create ephemeral containers
@@ -356,35 +356,35 @@ General guidelines and recommendations
    Docker has the ability to build images by piping a Dockerfile through stdin with a local or remote build context. Piping a Dockerfile through stdin can be useful to perform one-off builds without writing a Dockerfile to disk, or in situations where the Dockerfile is generated, and should not persist afterwards.
 
 7. Build an image using a Dockerfile from stdin, without sending build context
-    Use this syntax to build an image using a Dockerfile from stdin, without sending additional files as build context. The hyphen (-) takes the position of the PATH, and instructs Docker to read the build context, which only contains a Dockerfile, from stdin instead of a directory: docker build [OPTIONS] -
+    Use this syntax to build an image using a Dockerfile from stdin, without sending additional files as build context. The hyphen (-) takes the position of the PATH, and instructs Docker to read the build context, which only contains a Dockerfile, from stdin instead of a directory: `docker build [OPTIONS] -`
     The following example builds an image using a Dockerfile that is passed through stdin. No files are sent as build context to the daemon.
 
 
-    docker build -t myimage:latest -<<EOF
-    FROM busybox
-    RUN echo "hello world"
-    EOF
+            docker build -t myimage:latest -<<EOF
+            FROM busybox
+            RUN echo "hello world"
+            EOF
 8. Build from a local build context, using a Dockerfile from stdin
     Use this syntax to build an image using files on your local filesystem, but using a Dockerfile from stdin. The syntax uses the -f (or --file) option to specify the Dockerfile to use, and it uses a hyphen (-) as filename to instruct Docker to read the Dockerfile from stdin:
 
 
-    docker build [OPTIONS] -f- PATH
+        docker build [OPTIONS] -f- PATH
     The example below uses the current directory (.) as the build context, and builds an image using a Dockerfile that is passed through stdin using a here document.
 
-    docker build -t myimage:latest -f- . <<EOF
-    FROM busybox
-    COPY somefile.txt ./
-    RUN cat /somefile.txt
-    EOF
+            docker build -t myimage:latest -f- . <<EOF
+            FROM busybox
+            COPY somefile.txt ./
+            RUN cat /somefile.txt
+            EOF
 
 9. Build from a remote build context, using a Dockerfile from stdin
   Use this syntax to build an image using files from a remote Git repository, using a Dockerfile from stdin. The syntax uses the -f (or --file) option to specify the Dockerfile to use, using a hyphen (-) as filename to instruct Docker to read the Dockerfile from stdin:
 
-  docker build [OPTIONS] -f- PATH
-  docker build -t myimage:latest -f- https://github.com/docker-library/hello-world.git <<EOF
-  FROM busybox
-  COPY hello.c ./
-  EOF
+        docker build [OPTIONS] -f- PATH
+        docker build -t myimage:latest -f- https://github.com/docker-library/hello-world.git <<EOF
+        FROM busybox
+        COPY hello.c ./
+        EOF
 
 10. Minimize the number of layers
     In older versions of Docker, it was important that you minimized the number of layers in your images to ensure they were performant. The following features were added to reduce this limitation:
