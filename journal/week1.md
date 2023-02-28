@@ -404,16 +404,50 @@ General guidelines and recommendations
 ### Learn how to install docker on your local machine and put the same containers running outside gitpod or codespaces.
 
 ### Launch an EC2 instance that has docker installed and pull a container to demonstrate that you can run your own docker processes.
-* I lanuched an ec2 instance and named it docker, I ensured that port 22 is opened to allow remote ssh access. 
+* I lanuched an ec2 instance using ubuntu 20.04 t2 micro image and named it docker, I ensured that port 22 is opened to allow remote ssh access. 
 * I added one of the keys I used before. The key have neccessary permission set locally already to allow ssh access.
 ![ec2](./assets/Week-1/docker%20ec2.png)
 
 * I opened the terminal on my local machine and logged into the instance:
 
-    ssh -i KEY.PEM ubuntu@PUBLIC-IP-ADDRESS-OF-INSTANCE
+        ssh -i KEY.PEM ubuntu@PUBLIC-IP-ADDRESS-OF-INSTANCE
+
 ![ssh](./assets/Week-1/ssh.png)
 
-### Learn how to install docker on your local machine and put the same containers running outside gitpod or codespaces.
+* I checked the docker version on the instance to know if docker is on it
+
+    docker --version
+![docker](./assets/Week-1/docker%20--version.png)
+
+* Docker was not on it so I installed it through the following steps.
+    * update the instance
+
+        sudo apt udate
+        ![update](./assets/Week-1/sudo%20apt%20update.png)
+    * install docker io package which is a package needed for docker to be installed on ubuntu
+
+        sudo apt install docker.io
+        ![install](./assets/Week-1/install%20docker%20%20io.png)
+    * Next, I installed docker and checked the version of docker installed
+
+        sudo apt install docker
+        docker --version
+        ![install](./assets/Week-1/install%20docker%20%26%20docker%20version.png)
+
+* To demonstrate that I can run my own docker processes, I pulled a httpd container.
+    docker pull httpd
+    ![pull](./assets/Week-1/docker%20pull%20error.png)
+* It displayed an error and I observed that the error occured because the current user does not have the necessary permissions to run docker commands, thus I opted to use root access which is not a good security practice. I decided to use sudo just to test that I can pull container images.
+
+    sudo docker pull httpd
+ ![docker](./assets/Week-1/sudo.png)
+
+* I checked the image using the `docker images` command, an I got the same error as in the previous step as shown in the image above. Then I decided to give the current user and group ownership of  `/var/run/docker.sock` using the evironment variable `USER`.
+     sudo chown -R $USER:$USER /var/run/docker.sock
+The above command grants ownerhip for `/var/run/docker.sock` to the current user and its default group.
+  ![user](./assets/Week-1/docker%20chown.png)
+   
+
 
 
 
