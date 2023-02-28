@@ -450,11 +450,12 @@ General guidelines and recommendations
 
        sudo chown -R $USER:$USER /var/run/docker.sock
 
-The above command grants ownerhip of `/var/run/docker.sock` to the current user and its default group.
+* The above command grants ownerhip of `/var/run/docker.sock` to the current user and its default group.
 
-    ![user](./assets/Week-1/docker%20chown.png)
+![user](./assets/Week-1/docker%20chown.png)
    
+* Now, I can pull or run docker commands without root privilege.
 
-
-
+    docker images
+    ![images](./assets/Week-1/docker%20images%20pulled.png)
 
