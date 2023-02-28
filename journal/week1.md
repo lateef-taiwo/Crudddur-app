@@ -416,36 +416,43 @@ General guidelines and recommendations
 
 * I checked the docker version on the instance to know if docker is on it
 
-    docker --version
-![docker](./assets/Week-1/docker%20--version.png)
+        docker --version
+
+        ![docker](./assets/Week-1/docker%20--version.png)
 
 * Docker was not on it so I installed it through the following steps.
     * update the instance
 
-        sudo apt udate
-        ![update](./assets/Week-1/sudo%20apt%20update.png)
+            sudo apt udate
+            ![update](./assets/Week-1/sudo%20apt%20update.png)
     * install docker io package which is a package needed for docker to be installed on ubuntu
 
-        sudo apt install docker.io
-        ![install](./assets/Week-1/install%20docker%20%20io.png)
+            sudo apt install docker.io
+
+            ![install](./assets/Week-1/install%20docker%20%20io.png)
     * Next, I installed docker and checked the version of docker installed
 
-        sudo apt install docker
-        docker --version
-        ![install](./assets/Week-1/install%20docker%20%26%20docker%20version.png)
+            sudo apt install docker
+            docker --version
+
+            ![install](./assets/Week-1/install%20docker%20%26%20docker%20version.png)
 
 * To demonstrate that I can run my own docker processes, I pulled a httpd container.
-    docker pull httpd
-    ![pull](./assets/Week-1/docker%20pull%20error.png)
+        docker pull httpd
+        ![pull](./assets/Week-1/docker%20pull%20error.png)
 * It displayed an error and I observed that the error occured because the current user does not have the necessary permissions to run docker commands, thus I opted to use root access which is not a good security practice. I decided to use sudo just to test that I can pull container images.
 
-    sudo docker pull httpd
- ![docker](./assets/Week-1/sudo.png)
+        sudo docker pull httpd
 
-* I checked the image using the `docker images` command, an I got the same error as in the previous step as shown in the image above. Then I decided to give the current user and group ownership of  `/var/run/docker.sock` using the evironment variable `USER`.
-     sudo chown -R $USER:$USER /var/run/docker.sock
-The above command grants ownerhip for `/var/run/docker.sock` to the current user and its default group.
-  ![user](./assets/Week-1/docker%20chown.png)
+        ![docker](./assets/Week-1/sudo.png)
+
+* I checked the image using the `docker images` command, an I got the same error as in the previous step as shown in the image above. Then I decided to change ownership of `/var/run/docker.sock` using the evironment variable `USER`.
+
+       sudo chown -R $USER:$USER /var/run/docker.sock
+
+The above command grants ownerhip of `/var/run/docker.sock` to the current user and its default group.
+
+        ![user](./assets/Week-1/docker%20chown.png)
    
 
 
