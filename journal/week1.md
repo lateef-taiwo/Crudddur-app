@@ -457,5 +457,6 @@ General guidelines and recommendations
 * Now, I can pull or run docker commands without root privilege.
 
     docker images
+    
     ![images](./assets/Week-1/docker%20images%20pulled.png)
 
