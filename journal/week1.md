@@ -266,3 +266,152 @@ Directory volume mapping
     volumes:
         db:
             driver: local
+
+
+
+## HOME WORK CHALLENGES
+### Run the Dockerfile CMD as an external script
+* I created a bash script named `backendflask.sh`. Then I typed the following.
+        #!/bin/bash
+
+
+        python3 -m flask run --host=0.0.0.0     --port=4567
+
+* I made the script executable.
+`chmod +x backendflask.sh`
+![image](./assets/Week-1/excutable bit.png)
+* Then I referenced it inside the CMD line in the Dockerfile.
+
+        # Build the image from python:3.10-slim-buster
+        FROM python:3.10-slim-buster
+        # make and change directory inside the container image to /backend-flask
+        WORKDIR /backend-flask
+        # Copy requirements.txt from host to container image
+        COPY requirements.txt requirements.txt
+        # use pip3 to install the dependencies/packages stated in requirements.txt
+        RUN pip3 install -r requirements.txt
+        # copy everything from the cuurent directory in the host to the current directory (/backend-flask) in the container image
+        COPY . .
+        # set env var
+        ENV FLASK_ENV=development
+        # expose port for binding 
+        EXPOSE ${PORT}
+        #Run the Dockerfile CMD as an external script
+        CMD [ "backendflask.sh" ]
+        # Run this command to build the container image to run on port 4567
+        #CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=4567"]
+
+* Next, I built an image from the Dockerfile.
+    cd ..
+    docker build -t backendflask .
+
+* Finally, I ran a container using the sript.
+ docker run -d --name backendflask backendflask
+
+### Push and tag an image to dockerhub
+
+### Use multi-stage building for a Dockerfile build
+
+### Implement a healthcheck in the V3 Docker compose file.
+
+### Research best practices of Dockerfiles and attempt to implement it in your Dockerfile
+### Best practices for writing Dockerfiles
+Docker builds images automatically by reading the instructions from a Dockerfile.
+A Dockerfile follows a specific format and set of instructions which you can find at [Dockerfile reference](https://docs.docker.com/engine/reference/builder/).
+A Docker image consists of read-only layers each of which represents a Dockerfile instruction. The layers are stacked and each one is a delta of the changes from the previous layer as seen when building images for both backend and frontend app.
+
+General guidelines and recommendations
+1. Understand build context
+  The docker build or docker buildx build commands build Docker images from a Dockerfile and a “context”.
+
+  A build’s context is the set of files located at the PATH or URL specified as the positional argument to the build command:
+   docker build [OPTIONS] PATH as used when building the images. docker build -t backend ./backend-flask/ 
+   `./backend-flask` is he PATH specified as the positional argument to the build command.
+
+2. Create ephemeral containers
+  The image defined by your Dockerfile should generate containers that are as ephemeral as possible. Ephemeral means that the container can be stopped and destroyed, then rebuilt and replaced with an absolute minimum set up and configuration
+
+3. Exclude with .dockerignore
+   To exclude files not relevant to the build, without restructuring your source repository, use a .dockerignore file. This file supports exclusion patterns similar to .gitignore files.
+
+4. Use multi-stage builds
+   Multi-stage builds allow you to drastically reduce the size of your final image, without struggling to reduce the number of intermediate layers and files.
+
+  Because an image is built during the final stage of the build process, you can minimize image layers by leveraging build cache.
+
+  For example, if your build contains several layers and you want to ensure the build cache is reusable, you can order them from the less frequently changed to the more frequently changed. The following list is an example of the order of instructions:
+
+  * Install tools you need to build your application
+
+  * Install or update library dependencies
+
+  * Generate your application
+
+5. Don’t install unnecessary packages
+   Avoid installing extra or unnecessary packages just because they might be nice to have. For example, you don’t need to include a text editor in a database image.
+
+   When you avoid installing extra or unnecessary packages, you images will have reduced complexity, reduced dependencies, reduced file sizes, and reduced build times.
+
+6. Pipe Dockerfile through stdin
+   Docker has the ability to build images by piping a Dockerfile through stdin with a local or remote build context. Piping a Dockerfile through stdin can be useful to perform one-off builds without writing a Dockerfile to disk, or in situations where the Dockerfile is generated, and should not persist afterwards.
+
+7. Build an image using a Dockerfile from stdin, without sending build context
+    Use this syntax to build an image using a Dockerfile from stdin, without sending additional files as build context. The hyphen (-) takes the position of the PATH, and instructs Docker to read the build context, which only contains a Dockerfile, from stdin instead of a directory: docker build [OPTIONS] -
+    The following example builds an image using a Dockerfile that is passed through stdin. No files are sent as build context to the daemon.
+
+
+    docker build -t myimage:latest -<<EOF
+    FROM busybox
+    RUN echo "hello world"
+    EOF
+8. Build from a local build context, using a Dockerfile from stdin
+    Use this syntax to build an image using files on your local filesystem, but using a Dockerfile from stdin. The syntax uses the -f (or --file) option to specify the Dockerfile to use, and it uses a hyphen (-) as filename to instruct Docker to read the Dockerfile from stdin:
+
+
+    docker build [OPTIONS] -f- PATH
+    The example below uses the current directory (.) as the build context, and builds an image using a Dockerfile that is passed through stdin using a here document.
+
+    docker build -t myimage:latest -f- . <<EOF
+    FROM busybox
+    COPY somefile.txt ./
+    RUN cat /somefile.txt
+    EOF
+
+9. Build from a remote build context, using a Dockerfile from stdin
+  Use this syntax to build an image using files from a remote Git repository, using a Dockerfile from stdin. The syntax uses the -f (or --file) option to specify the Dockerfile to use, using a hyphen (-) as filename to instruct Docker to read the Dockerfile from stdin:
+
+  docker build [OPTIONS] -f- PATH
+  docker build -t myimage:latest -f- https://github.com/docker-library/hello-world.git <<EOF
+  FROM busybox
+  COPY hello.c ./
+  EOF
+
+10. Minimize the number of layers
+    In older versions of Docker, it was important that you minimized the number of layers in your images to ensure they were performant. The following features were added to reduce this limitation:
+
+    Only the instructions RUN, COPY, ADD create layers. Other instructions create temporary intermediate images, and don’t increase the size of the build.
+
+    Where possible, use multi-stage builds, and only copy the artifacts you need into the final image. This allows you to include tools and debug information in your intermediate build stages without increasing the size of the final image.
+
+11. Decouple applications
+    Each container should have only one concern. Decoupling applications into multiple containers makes it easier to scale horizontally and reuse containers. For instance, a web application stack might consist of three separate containers, each with its own unique image, to manage the web application, database, and an in-memory cache in a decoupled manner.
+
+    Limiting each container to one process is a good rule of thumb, but it’s not a hard and fast rule. 
+    Use your best judgment to keep containers as clean and modular as possible. If containers depend on each other, you can use Docker container networks to ensure that these containers can communicate.
+
+    Multistage build has been implemented in `docker-compose file` as a best practice of Dockerfile
+
+### Learn how to install docker on your local machine and put the same containers running outside gitpod or codespaces.
+
+### Launch an EC2 instance that has docker installed and pull a container to demonstrate that you can run your own docker processes.
+* I lanuched an ec2 instance and named it docker, I ensured that port 22 is opened to allow remote ssh access. 
+* I added one of the keys I used before. The key have neccessary permission set locally already to allow ssh access.
+![ec2](./assets/Week-1/docker%20ec2.png)
+
+* I opened the terminal on my local machine and logged into the instance:
+    ssh -i KEY.PEM ubuntu@PUBLIC-IP-ADDRESS-OF-INSTANCE
+![ssh](./assets/Week-1/ssh.png)
+
+
+
+
