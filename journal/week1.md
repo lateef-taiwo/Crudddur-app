@@ -405,7 +405,7 @@ General guidelines and recommendations
 
 ### Launch an EC2 instance that has docker installed and pull a container to demonstrate that you can run your own docker processes.
 * I lanuched an ec2 instance using ubuntu 20.04 t2 micro image and named it docker, I ensured that port 22 is opened to allow remote ssh access. 
-* I added one of the keys I used before. The key have neccessary permission set locally already to allow ssh access.
+* I added one of the keys I used before. The key has neccessary permission already set locally to allow ssh access.
 ![ec2](./assets/Week-1/docker%20ec2.png)
 
 * I opened the terminal on my local machine and logged into the instance:
@@ -457,6 +457,6 @@ General guidelines and recommendations
 * Now, I can pull or run docker commands without root privilege.
 
     docker images
-    
+
     ![images](./assets/Week-1/docker%20images%20pulled.png)
 
