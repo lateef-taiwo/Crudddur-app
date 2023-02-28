@@ -310,6 +310,7 @@ Directory volume mapping
 
 ### Push and tag an image to dockerhub
 
+
 ### Use multi-stage building for a Dockerfile build
 
 ### Implement a healthcheck in the V3 Docker compose file.
