@@ -409,9 +409,11 @@ General guidelines and recommendations
 ![ec2](./assets/Week-1/docker%20ec2.png)
 
 * I opened the terminal on my local machine and logged into the instance:
+
     ssh -i KEY.PEM ubuntu@PUBLIC-IP-ADDRESS-OF-INSTANCE
 ![ssh](./assets/Week-1/ssh.png)
 
+### Learn how to install docker on your local machine and put the same containers running outside gitpod or codespaces.
 
 
 
