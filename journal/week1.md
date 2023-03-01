@@ -267,8 +267,217 @@ Directory volume mapping
         db:
             driver: local
 
+### Created a notification feature for backend and frontend
+### Added this in the openapi.yml file
 
+      /api/activities/notifications:
+    get:
+      description: 'Return a feed of activity for all the people i follow'
+      tags:
+        - activities
+        
+      parameters: []
+      responses:
+        '200':
+          description: Returns an array of activities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Activity'
 
+![openai](./assets/Week-1/openai.png)
+
+### In the backend-flask/services directory created, I created a notifications_activities.py file and pasted the below:
+
+    from datetime import datetime, timedelta, timezone
+    class NotificationsActivities:
+    def run():
+        now = datetime.now(timezone.utc).astimezone()
+        results = [{
+        'uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eee',
+        'handle':  '3abuza',
+        'message': 'I am a DevOps Engineer',
+        'created_at': (now - timedelta(days=2)).isoformat(),
+        'expires_at': (now + timedelta(days=5)).isoformat(),
+        'likes_count': 5,
+        'replies_count': 1,
+        'reposts_count': 0,
+        'replies': [{
+            'uuid': '26e12864-1c26-5c3a-9658-97a10f8fea67',
+            'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eee',
+            'handle':  'Worf',
+            'message': 'This post has no honor!',
+            'likes_count': 0,
+            'replies_count': 0,
+            'reposts_count': 0,
+            'created_at': (now - timedelta(days=2)).isoformat()
+        }],
+        },
+    
+        ]
+        return results
+
+![notifications](./assets/Week-1/notification-activities.png)
+
+### In the frontend/src/pages directory, I added a new page NotificationsFeedPage.js file and pasted the following code
+
+        import './NotificationsFeedPage.css';
+        import React from "react";
+
+        import DesktopNavigation  from '../components/DesktopNavigation';
+        import DesktopSidebar     from '../components/DesktopSidebar';
+        import ActivityFeed from '../components/ActivityFeed';
+        import ActivityForm from '../components/ActivityForm';
+        import ReplyForm from '../components/ReplyForm';
+
+        // [TODO] Authenication
+        import Cookies from 'js-cookie'
+
+        export default function NotificationsFeedPage() {
+        const [activities, setActivities] = React.useState([]);
+        const [popped, setPopped] = React.useState(false);
+        const [poppedReply, setPoppedReply] = React.useState(false);
+        const [replyActivity, setReplyActivity] = React.useState({});
+        const [user, setUser] = React.useState(null);
+        const dataFetchedRef = React.useRef(false);
+
+        const loadData = async () => {
+            try {
+            const backend_url = `${process.env.REACT_APP_BACKEND_URL}/api/activities/notifications`
+            const res = await fetch(backend_url, {
+                method: "GET"
+            });
+            let resJson = await res.json();
+            if (res.status === 200) {
+                setActivities(resJson)
+            } else {
+                console.log(res)
+            }
+            } catch (err) {
+            console.log(err);
+            }
+        };
+
+        const checkAuth = async () => {
+            console.log('checkAuth')
+            // [TODO] Authenication
+            if (Cookies.get('user.logged_in')) {
+            setUser({
+                display_name: Cookies.get('user.name'),
+                handle: Cookies.get('user.username')
+            })
+            }
+        };
+
+        React.useEffect(()=>{
+            //prevents double call
+            if (dataFetchedRef.current) return;
+            dataFetchedRef.current = true;
+
+            loadData();
+            checkAuth();
+        }, [])
+
+        return (
+            <article>
+            <DesktopNavigation user={user} active={'notifications'} setPopped={setPopped} />
+            <div className='content'>
+                <ActivityForm  
+                popped={popped}
+                setPopped={setPopped} 
+                setActivities={setActivities} 
+                />
+                <ReplyForm 
+                activity={replyActivity} 
+                popped={poppedReply} 
+                setPopped={setPoppedReply} 
+                setActivities={setActivities} 
+                activities={activities} 
+                />
+                <ActivityFeed 
+                title="Notifications" 
+                setReplyActivity={setReplyActivity} 
+                setPopped={setPoppedReply} 
+                activities={activities} 
+                />
+            </div>
+            <DesktopSidebar user={user} />
+            </article>
+        );
+        }
+
+![notification](./assets/Week-1/notifications-feed-page.png)
+
+### in the frontend-react-js/src/App.js file, add the following:
+
+    import NotificationsFeedPage from './pages/NotificationsFeedPage';
+
+    {
+       path: "/notifications",
+       element: <NotificationsFeedPage />
+    },
+
+![app](./assets/Week-1/frontend-src-appjs.png)
+
+### Adding DynamoDB Local and Postgres
+### Integrate the following into our existing docker compose file:
+
+#### Postgres
+    services:
+    db:
+        image: postgres:13-alpine
+        restart: always
+        environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=password
+        ports:
+        - '5432:5432'
+        volumes: 
+        - db:/var/lib/postgresql/data
+    volumes:
+    db:
+        driver: local
+
+### To install the postgres client into Gitpod
+      - name: postgres
+    init: |
+      curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc|sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
+      echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" |sudo tee  /etc/apt/sources.list.d/pgdg.list
+      sudo apt update
+      sudo apt install -y postgresql-client-13 libpq-dev
+
+### DynamoDB Local
+    services:
+    dynamodb-local:
+    # https://stackoverflow.com/questions/67533058/persist-local-dynamodb-data-in-volumes-lack-permission-unable-to-open-databa
+    # We needed to add user:root to get this working.
+    user: root
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
+    image: "amazon/dynamodb-local:latest"
+    container_name: dynamodb-local
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./docker/dynamodb:/home/dynamodblocal/data"
+    working_dir: /home/dynamodblocal
+
+Example of using DynamoDB local [https://github.com/100DaysOfCloud/challenge-dynamodb-local](https://github.com/100DaysOfCloud/challenge-dynamodb-local)
+
+### Volumes
+Directory volume mapping
+
+    volumes: 
+    - "./docker/dynamodb:/home/dynamodblocal/data"
+
+### named volume mapping
+    volumes: 
+      - db:/var/lib/postgresql/data
+
+    volumes:
+      db:
+        driver: local
 ## HOME WORK CHALLENGES
 ### Run the Dockerfile CMD as an external script
 * I created a bash script named `backendflask.sh`. Then I typed the following.
