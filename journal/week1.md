@@ -478,6 +478,47 @@ Directory volume mapping
     volumes:
       db:
         driver: local
+
+### Challenge Dynamodb Local
+Dynamodb Local emulates a Dynamodb database in your local envirmoment for rapid developement and table design interation
+
+### Run Docker Local
+    docker-compose up
+> This is an alternative command to `docker compose -f "docker-compose.yml up -d --build`
+
+![docker](./assets/Week-1/docker-compose-up.png)
+
+### Create a table
+    aws dynamodb create-table \
+    --endpoint-url http://localhost:8000 \
+    --table-name Music \
+    --attribute-definitions \
+        AttributeName=Artist,AttributeType=S \
+        AttributeName=SongTitle,AttributeType=S \
+    --key-schema AttributeName=Artist,KeyType=HASH AttributeName=SongTitle,KeyType=RANGE \
+    --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1 \
+    --table-class STANDARD
+
+![table](./assets/Week-1/dynamo%20db%20table.png)
+
+### List Tables
+    aws dynamodb list-tables --endpoint-url http://localhost:8000
+
+![table](./assets/Week-1/table-list.png)
+
+### Create an Item
+    aws dynamodb put-item \
+    --endpoint-url http://localhost:8000 \
+    --table-name Music \
+    --item \
+        '{"Artist": {"S": "No One You Know"}, "SongTitle": {"S": "Call Me Today"}, "AlbumTitle": {"S": "Somewhat Famous"}}' \
+    --return-consumed-capacity TOTAL  
+### Get Records
+
+    aws dynamodb scan --table-name Music --query "Items" --endpoint-url http://localhost:8000
+
+![record](./assets/Week-1/get-record.png)
+
 ## HOME WORK CHALLENGES
 ### Run the Dockerfile CMD as an external script
 * I created a bash script named `backendflask.sh`. Then I typed the following.
