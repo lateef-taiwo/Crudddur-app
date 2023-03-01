@@ -350,7 +350,7 @@ Directory volume mapping
 ![docker](./assets/Week-1/docker-hub-image-pushed.png)
 
 ### Use multi-stage building for a Dockerfile build
-Multi-stage simply means you have  diff stages typically, build and production stage
+Multi-stage simply means you have  different stages typically, build and production stage
 Example of  multi stage build
 
     # Build stage
@@ -381,7 +381,9 @@ Example of  multi stage build
 
 
 ### Implement a healthcheck in the V3 Docker compose file.
+I implemented healthcheck in the docker compose file as shown in the image below.
 
+![healthcheck](./assets/Week-1/healthcheck.png)
 
 ### Research best practices of Dockerfiles and attempt to implement it in your Dockerfile
 ### Best practices for writing Dockerfiles
@@ -524,7 +526,7 @@ Before pushing an image to docker hub, someone must have docker installed   I ha
 * To demonstrate that I can run my own docker processes, I pulled a httpd container.
         docker pull httpd
     ![pull](./assets/Week-1/docker%20pull%20error.png)
-* It displayed an error and I observed that the error occured because the current user does not have the necessary permissions to run docker commands, thus I opted to use root access which is not a good security practice. I decided to use sudo just to test that I can pull container images.
+* It displayed an error and I observed that the error occured because the current user does not have the necessary permissions to run docker commands, thus I opted to use root access which is not a good security practice. I decided to use sudo just to test that I can pull container images. In the next steps I will disable root user from running containers and grant a non-root user permissions to run containers.
 
         sudo docker pull httpd
 
@@ -538,7 +540,7 @@ Before pushing an image to docker hub, someone must have docker installed   I ha
 
 ![user](./assets/Week-1/docker%20chown.png)
    
-* Now, I can pull or run docker commands without root privilege.
+* Now, I can pull or run docker commands in a non-root user mode, this is a security best practice for containers.
 
     docker images
 
