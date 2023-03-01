@@ -481,7 +481,9 @@ Before pushing an image to docker hub, someone must have docker installed   I ha
 
 ![docker](./assets/Week-1/docker-images-backend-flask.png)
 
+* I then ran a container using the image.
 
+    docker run -d --name backend-flask -it backend-flask
 
 
 ### Launch an EC2 instance that has docker installed and pull a container to demonstrate that you can run your own docker processes.
