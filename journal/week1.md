@@ -308,10 +308,77 @@ Directory volume mapping
 * Finally, I ran a container using the sript.
  docker run -d --name backendflask backendflask
 
-### Push and tag an image to dockerhub
+### Push and tag an image to docker hub
+* Before pushing an image to docker hub, someone must have docker installed   I had some challenges installing docker on my local system, so I created an Ubuntu virtual machine using oracle virtual box. Then I installed docker on it.
 
+* I logged into my dockerhub account @ [hub.docker.com](https://hub.docker.com/). Then I created a repository for a python backend container tagged voting-app.
+
+    ![docker-hub](./assets/Week-1/docker-hub.png)
+
+* In the terminal of my local machine, I typed `docker login` and provided my dockerhub credentials to login to my docker hub repository so that I can easily pull and push images.
+
+* Next, I open the directory for the app I want to make into a docker image so that I can build it locally before pushing to docker hub. I typed:
+
+    docker build -t voting-app:1.0 .
+
+> This built and image from a Dockerfile in the directory.
+
+![docker](./assets/Week-1/docker-image-build1.png)
+
+![docker](./assets/Week-1/docker-image-build-2.png)
+
+* I checked the images built.
+    docker images
+
+![docker](./assets/Week-1/docker-images-for-push.png)
+
+* I tagged the image with my docker hub username to prepare for push to docker hub. And then checked the images again.
+
+    docker tag IMAGE-ID DOCKER-HUB-USERNAME/voting-app:1.0
+
+    docker images
+
+    ![docker](./assets/Week-1/docker-tag-docker-images.png)
+
+* After tagging the image, I pushed to docker hub.
+
+    docker push savytech/voting-app:1.0
+![docker](./assets/Week-1/docker-push.png)
+
+* Finally, I opened the initially created docker hub repository to view the image I just pushed.
+
+![docker](./assets/Week-1/docker-hub-image-pushed.png)
 
 ### Use multi-stage building for a Dockerfile build
+Multi-stage simply means you have  diff stages typically, build and production stage
+Example of  multi stage build
+
+# Build stage
+FROM node:16.13.2 AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+# Production stage
+FROM nginx:1.21.3-alpine
+COPY --from=build /app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"
+
+Build static website using nginx image
+FROM nginx:alpine
+
+# Copy the application files to the Nginx image
+COPY . /usr/share/nginx/html
+
+# Expose the application port
+EXPOSE 80
+
+# Start the Nginx server
+CMD ["nginx", "-g", "daemon off;"]
+
 
 ### Implement a healthcheck in the V3 Docker compose file.
 
