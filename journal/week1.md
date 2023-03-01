@@ -309,7 +309,7 @@ Directory volume mapping
  docker run -d --name backendflask backendflask
 
 ### Push and tag an image to docker hub
-* I opted to use my local machine for this part of the homowork challenge but before pushing an image to docker hub, someone must have docker installed on the system. Although, I had some challenges installing docker on my local system, so I created an Ubuntu virtual machine using oracle virtual box. Then I installed docker on it.
+* I opted to use my local machine for this part of the homowork challenge but before pushing an image to docker hub,docker must be installed on the system. Although, I had some challenges installing docker on my local system, so I created an Ubuntu virtual machine using oracle virtual box. Then I installed docker on it.
 
 * I logged into my docker hub account at [hub.docker.com](https://hub.docker.com/). Then I created a repository for a python backend container tagged voting-app.
 
@@ -381,6 +381,7 @@ Example of  multi stage build
 
 
 ### Implement a healthcheck in the V3 Docker compose file.
+
 
 ### Research best practices of Dockerfiles and attempt to implement it in your Dockerfile
 ### Best practices for writing Dockerfiles
@@ -470,7 +471,7 @@ General guidelines and recommendations
     Multistage build has been implemented in `docker-compose file` as a best practice of Dockerfile
 
 ### Learn how to install docker on your local machine and put the same containers running outside gitpod or codespaces.
-Before pushing an image to docker hub, someone must have docker installed   I had some challenges installing docker on my local system, so I created an Ubuntu virtual machine using oracle virtual box. Then I installed docker, docker engine, docker engine cli, docker compose and docker desktop on it following this [official documentation from docker](https://docs.docker.com/desktop/install/ubuntu/).
+Before pushing an image to docker hub, someone must have docker installed   I had some challenges installing docker on my local system, so I created an Ubuntu virtual machine using oracle virtual box. Then I installed docker, docker engine, docker engine cli, docker compose, containerd and docker desktop on it following this [official documentation from docker](https://docs.docker.com/desktop/install/ubuntu/).
  
 * I built the backend-flask image giving it a tag of 1.0
 ![docker](./assets/Week-1/docker-build-backend-flask.png) 
