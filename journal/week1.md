@@ -471,6 +471,16 @@ General guidelines and recommendations
 
 ### Learn how to install docker on your local machine and put the same containers running outside gitpod or codespaces.
 Before pushing an image to docker hub, someone must have docker installed   I had some challenges installing docker on my local system, so I created an Ubuntu virtual machine using oracle virtual box. Then I installed docker, docker engine, docker engine cli, docker compose and docker desktop on it following this [official documentation from docker](https://docs.docker.com/desktop/install/ubuntu/).
+ 
+* I built the backend-flask image giving it a tag of 1.0
+![docker](./assets/Week-1/docker-build-backend-flask.png) 
+
+![docker](./assets/Week-1/docker-%20build-backend-flask-2.png)
+
+    docker images
+
+![docker](./assets/Week-1/docker-images-backend-flask.png)
+
 
 
 
