@@ -7,6 +7,12 @@ services:
     build: ./backend-flask
     ports:
       - "4567:4567"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"]
+      interval: 10s
+      timeout: 5s
+      retries: 2
+      start_period: 5s
     volumes:
       - ./backend-flask:/backend-flask
   frontend-react-js:
@@ -15,6 +21,12 @@ services:
     build: ./frontend-react-js
     ports:
       - "3000:3000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://3000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"]
+      interval: 10s
+      timeout: 5s
+      retries: 2
+      start_period: 5s
     volumes:
       - ./frontend-react-js:/frontend-react-js
 
