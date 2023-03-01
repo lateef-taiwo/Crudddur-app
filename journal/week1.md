@@ -29,7 +29,7 @@ Prior to Containerizing the backend, I ran the application to cofirm it works.
 
   `vim Dockerfile`
 
-![DOckerfile](./assets/Week-1/Dockerfile%20backend.png)
+![D0ckerfile](./assets/Week-1/Dockerfile-backend2.png)
 
  * Paste this code in the Dockerfile. 
     
