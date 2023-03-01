@@ -519,6 +519,18 @@ Dynamodb Local emulates a Dynamodb database in your local envirmoment for rapid 
 
 ![record](./assets/Week-1/get-record.png)
 
+### Install postgresql
+      curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc|sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
+      echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" |sudo tee  /etc/apt/sources.list.d/pgdg.list
+      sudo apt update
+      sudo apt install -y postgresql-client-13 libpq-dev          
+
+### Test Postgresql connection
+
+![postgres](./assets/Week-1/postgres.png)
+
+![postgres](./assets/Week-1/postgres2.png)
+
 ## HOME WORK CHALLENGES
 ### Run the Dockerfile CMD as an external script
 * I created a bash script named `backendflask.sh`. Then I typed the following.
