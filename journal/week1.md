@@ -635,6 +635,11 @@ I implemented healthcheck in the docker compose file as shown in the image below
 
 ![healthcheck](./assets/Week-1/healthcheck.png)
 
+    docker ps
+> To view running container and also see the health status. One of the containers is healthy and for some reasons the second one is unhealthy, I will have to troubleshoot to know the reason why it is unhealthy.
+
+![health](./assets/Week-1/healthy.png)
+
 ### Research best practices of Dockerfiles and attempt to implement it in your Dockerfile
 ### Best practices for writing Dockerfiles
 Docker builds images automatically by reading the instructions from a Dockerfile.
