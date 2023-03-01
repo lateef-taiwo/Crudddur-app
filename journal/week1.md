@@ -201,8 +201,8 @@ I Created `docker-compose.yml file` at the root of the project and I pasted the 
 ![docker compose](./assets/Week-1/docker-compose-build-complete.png)
 
 ### Open the app
-Make sure the padlock on ports 3000 and 4567 are open in the ports session, then open the link with port 300 in the browser.
-I encountered the CORS (Cross Origin Resource Sharing) error encountered during the livestream. I checked that the ports are correct in the docker-compose file, and ran the `docker compose -f "docker-compose.yml" up -d --build`. After several hours of building the image and checking online to see if I can get a fix, I discovered that there is an issue with the browser I was using (firefox) its blocks CORS, although I tried to enable it after reading several suggestion fixes on [stackoverflow.com](https://stackoverflow.com/questions/26980713/solve-cross-origin-resource-sharing-with-flask) but the error still persists. Then I opted to use gitpod on Chrome browser and it worked.
+I ensured that the padlock on ports 3000 and 4567 are open in the ports session, then open the link with port 300 in the browser.
+I encountered the CORS (Cross Origin Resource Sharing) error encountered during the livestream. I checked that the ports are correct in the docker-compose file, and ran the `docker compose -f "docker-compose.yml" up -d --build`. After several hours of building the images and running containers from the docker compose file and also checking online to see if I can get a fix, I discovered that there is an issue with the browser I was using (firefox) its blocks CORS, although I tried to enable it after reading several suggestion fixes on [stackoverflow.com](https://stackoverflow.com/questions/26980713/solve-cross-origin-resource-sharing-with-flask) but the error still persists. Then I opted to use gitpod on Chrome browser and it worked.
 
 ![errors](./assets/Week-1/errors.png)
 
@@ -309,9 +309,9 @@ Directory volume mapping
  docker run -d --name backendflask backendflask
 
 ### Push and tag an image to docker hub
-* Before pushing an image to docker hub, someone must have docker installed   I had some challenges installing docker on my local system, so I created an Ubuntu virtual machine using oracle virtual box. Then I installed docker on it.
+* I opted to use my local machine for this part of the homowork challenge but before pushing an image to docker hub, someone must have docker installed on the system. Although, I had some challenges installing docker on my local system, so I created an Ubuntu virtual machine using oracle virtual box. Then I installed docker on it.
 
-* I logged into my dockerhub account @ [hub.docker.com](https://hub.docker.com/). Then I created a repository for a python backend container tagged voting-app.
+* I logged into my docker hub account at [hub.docker.com](https://hub.docker.com/). Then I created a repository for a python backend container tagged voting-app.
 
     ![docker-hub](./assets/Week-1/docker-hub.png)
 
@@ -353,31 +353,31 @@ Directory volume mapping
 Multi-stage simply means you have  diff stages typically, build and production stage
 Example of  multi stage build
 
-# Build stage
-FROM node:16.13.2 AS build
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build
+    # Build stage
+    FROM node:16.13.2 AS build
+    WORKDIR /app
+    COPY package*.json ./
+    RUN npm install
+    COPY . .
+    RUN npm run build
 
-# Production stage
-FROM nginx:1.21.3-alpine
-COPY --from=build /app/build /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"
+    # Production stage
+    FROM nginx:1.21.3-alpine
+    COPY --from=build /app/build /usr/share/nginx/html
+    EXPOSE 80
+    CMD ["nginx", "-g", "daemon off;"
 
-Build static website using nginx image
-FROM nginx:alpine
+    Build static website using nginx image
+    FROM nginx:alpine
 
-# Copy the application files to the Nginx image
-COPY . /usr/share/nginx/html
+    # Copy the application files to the Nginx image
+    COPY . /usr/share/nginx/html
 
-# Expose the application port
-EXPOSE 80
+    # Expose the application port
+    EXPOSE 80
 
-# Start the Nginx server
-CMD ["nginx", "-g", "daemon off;"]
+    # Start the Nginx server
+    CMD ["nginx", "-g", "daemon off;"]
 
 
 ### Implement a healthcheck in the V3 Docker compose file.
@@ -470,6 +470,9 @@ General guidelines and recommendations
     Multistage build has been implemented in `docker-compose file` as a best practice of Dockerfile
 
 ### Learn how to install docker on your local machine and put the same containers running outside gitpod or codespaces.
+Before pushing an image to docker hub, someone must have docker installed   I had some challenges installing docker on my local system, so I created an Ubuntu virtual machine using oracle virtual box. Then I installed docker, docker engine, docker engine cli, docker compose and docker desktop on it following this [official documentation from docker](https://docs.docker.com/desktop/install/ubuntu/).
+
+
 
 ### Launch an EC2 instance that has docker installed and pull a container to demonstrate that you can run your own docker processes.
 * I lanuched an ec2 instance using ubuntu 20.04 t2 micro image and named it docker, I ensured that port 22 is opened to allow remote ssh access. 
