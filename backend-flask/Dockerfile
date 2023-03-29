@@ -12,7 +12,5 @@ COPY . .
 ENV FLASK_ENV=development
 # expose port for binding 
 EXPOSE ${PORT}
-#Run the Dockerfile CMD as an external script
-#CMD [ "backendflask.sh" ]
 # Run this command to build the container image to run on port 4567
 CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=4567"]
